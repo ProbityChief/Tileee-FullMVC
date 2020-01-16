@@ -37,7 +37,7 @@ public class CreationStacks {
 
 	@PostMapping
 	@ResponseBody
-	public void ajoutCarte(@RequestBody Card card, User user) {
+	public void ajoutCarte(@RequestBody Card card,@RequestBody User user) {
 		TagsDAO tagdao = new TagsDAO("tileee");
 		CardDao carddao = new CardDao("tileee");
 		UserValidator uservalidator = new UserValidator("tileee");
