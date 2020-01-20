@@ -1,11 +1,13 @@
 package dawan.projet.tileee.bean;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +19,7 @@ public class User extends DbObject {
 	private LocalDate registrationdate;
 	private boolean validation;
 	private String rand;
-
+	
 	public User() {
 		super();
 	}
