@@ -15,7 +15,11 @@ public class CardsServices {
 	@Autowired
 	private TagsRepository tagsRepository;
 
-	public void insert(Card card, String tagName, User user) {
+	@Autowired
+	private UsersServices usersServices;
+	
+	public void insert(Card card, String tagName, String login) {
+		User user = usersServices.findByLogin(login);
 		if (card != null && card.getId() == 0) {
 				boolean tagExists = tagsRepository.findByTagName(tagName) != null;
 				Tag tag = null;
@@ -25,7 +29,26 @@ public class CardsServices {
 					tag.setUser(user);
 					tag.setTagName(tagName);
 					tag.setRand(UserValidator.hash(user.getLogin() + "_" + tagName));
-					tagsRepository.save(tag);
+					user.addTag(tag);
+				} else {
+					tag = tagsRepository.findByTagName(tagName);
+				}
+
+				tag.addCard(card);
+
+				//cardsRepository.save(card);
+		}
+	}
+	
+	public void remove(Card card, String tagName, String login) {
+		User user = usersServices.findByLogin(login);
+		if (card != null && card.getId() == 0) {
+				Tag tag = tagsRepository.findByTagName(tagName);
+
+				tag.removeCard(card);
+				
+				if (tag.getCards().size() == 0) {		
+					user.removeTag(tag);
 				} else {
 					tag = tagsRepository.findByTagName(tagName);
 				}

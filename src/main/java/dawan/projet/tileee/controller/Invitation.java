@@ -29,22 +29,20 @@ public class Invitation {
 	@Autowired
 	private TagsServices tagsServices;
 	
-	@GetMapping("/{userid}")
-	@ResponseBody
-	public List<String> listTag(@PathVariable("userid") int id) {
-		User user = (User)usersServices.findById(id);
-			
-		Set<Tag> tagsList = user.getTags();
-		List<String> nomTags = new ArrayList<String>();
-		for(Tag T : tagsList) {
-			nomTags.add(T.getTagName());
-		}
-		return nomTags;
-	}
-	
-	@PostMapping()
-	@ResponseBody
-	public void copieTag(@RequestBody String rand, @RequestBody User user) {
-		tagsServices.CloneTags(rand, user);
+//	@GetMapping("/{userid}")
+//	public List<String> listTag(@PathVariable("userid") int id) {
+//		User user = (User)usersServices.findById(id);
+//			
+//		Set<Tag> tagsList = user.getTags();
+//		List<String> nomTags = new ArrayList<String>();
+//		for(Tag T : tagsList) {
+//			nomTags.add(T.getTagName());
+//		}
+//		return nomTags;
+//	}
+//	
+	@GetMapping("/{login}/{rand}")
+	public void copieTag(@PathVariable("login") String login, @PathVariable("rand") String rand) {
+		tagsServices.CloneTags(rand, usersServices.findByLogin(login));
 	}
 }

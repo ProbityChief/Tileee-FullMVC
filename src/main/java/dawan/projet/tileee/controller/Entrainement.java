@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +32,11 @@ public class Entrainement {
 	@Autowired
 	private TagsServices tagsServices;
 
-	@GetMapping("/{userid}")
+	@GetMapping("/{login}")
 	@ResponseBody
-	public Set<Tag> chargementTags(@PathVariable("userid") int id) {
+	public Set<Tag> chargementTags(@PathVariable("login") String login) {
 
-		User user = (User) usersServices.findById(id);
+		User user = (User) usersServices.findByLogin(login);
 
 		if (user == null) {
 			return new HashSet<Tag>();

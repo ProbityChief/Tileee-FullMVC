@@ -1,6 +1,7 @@
 package dawan.projet.tileee.bean;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -74,11 +75,13 @@ public class User extends DbObject {
 		this.rand = rand;
 	}
 	public Set<Tag> getTags() {
-		return tags;
+		return new HashSet<Tag>(tags);
 	}
-	public void setTags(Set<Tag> tags) {
-		this.tags = tags;
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
 	}
-	
+	public void removeTag(Tag tag) {
+		this.tags.remove(tag);
+	}
 	
 }
