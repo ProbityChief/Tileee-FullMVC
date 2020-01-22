@@ -14,8 +14,8 @@ import dawan.projet.tileee.services.UsersServices;
  * Servlet implementation class FinalisationInscription
  */
 @RestController
-@RequestMapping("/finalisationinscription")
 @CrossOrigin(origins = "*")
+@RequestMapping("/finalisationinscription")
 public class FinalisationInscription {
 	
 	@Autowired

@@ -1,10 +1,8 @@
 package dawan.projet.tileee.bean;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
