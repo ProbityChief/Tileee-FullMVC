@@ -40,6 +40,11 @@ public class Identification {
 	public Message inscription(@RequestBody User user) {
 		Message msg = new Message();
 		try {
+			User usr = usersServices.findByLogin(user.getLogin());
+			if(usr != null) {
+				msg.setMessage("This login is already taken");
+				return msg;
+			}
 			String rand = UserValidator.hash(user.getLogin() + "_" + user.getMail());
 			user.setRand(rand);
 
