@@ -19,6 +19,8 @@ public class User extends DbObject {
 	private LocalDate registrationdate;
 	private boolean validation;
 	private String rand;
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	private Set<Tag> tags;
 	
 	public User() {
 		super();
@@ -58,6 +60,9 @@ public class User extends DbObject {
 	public LocalDate getRegistrationdate() {
 		return registrationdate;
 	}
+	public void setRegistrationdate(LocalDate registrationdate) {
+		this.registrationdate = registrationdate;
+	}
 	public boolean isValidation() {
 		return validation;
 	}
@@ -70,4 +75,12 @@ public class User extends DbObject {
 	public void setRand(String rand) {
 		this.rand = rand;
 	}
+	public Set<Tag> getTags() {
+		return tags;
+	}
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+	
+	
 }

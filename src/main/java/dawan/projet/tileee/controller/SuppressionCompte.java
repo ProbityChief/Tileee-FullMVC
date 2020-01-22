@@ -1,36 +1,32 @@
 package dawan.projet.tileee.controller;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.hibernate.LockMode;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import dawan.projet.tileee.dao.UserDao;
+import dawan.projet.tileee.bean.Message;
+import dawan.projet.tileee.services.UsersServices;
 
-@Controller
-@RequestMapping("/SuppressionCompte")
+@RestController
+@RequestMapping("/suppressioncompte")
 public class SuppressionCompte {
 
+	@Autowired
+	private UsersServices usersServices;
 	@PostMapping()
-	@ResponseBody
-	public Boolean supressionCompte(@RequestBody dawan.projet.tileee.bean.User user) {
-		UserDao userdao = new UserDao("tileee");
+	public Message supressionCompte(@RequestBody dawan.projet.tileee.bean.User user) {
+		Message msg = new Message();
 		try {
-    		userdao.delete(user, true);
-    		return true;
+    		usersServices.delete(user);
+    		msg.setMessage("Votre compte à bien été supprimé");
+    		return msg;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		
+		msg.setMessage("Erreur pendant la suppression de votre compte");
+		return msg;
 	}
 }

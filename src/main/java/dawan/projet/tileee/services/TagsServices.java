@@ -33,4 +33,8 @@ public class TagsServices {
 			cloneTag.addCard(c);
 		}	
 	}
+
+	public Tag findByRand(String rand) {
+		return tagsRepository.findByRand(rand);
+	}
 }

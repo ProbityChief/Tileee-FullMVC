@@ -1,36 +1,45 @@
 package dawan.projet.tileee.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import dawan.projet.tileee.bean.Message;
+import dawan.projet.tileee.services.UsersServices;
 
 /**
  * Servlet implementation class FinalisationInscription
  */
 @RestController
-@RequestMapping("/FinalisationInscription")
+@RequestMapping("/finalisationinscription")
+@CrossOrigin(origins = "*")
 public class FinalisationInscription {
-
+	
+	@Autowired
+	private UsersServices usersServices;
+	
 	@GetMapping("/{rand}")
-	@ResponseBody
-	public String chargementTags(@PathVariable("rand") String rand) {
-		dawan.projet.tileee.dao.UserDao userdao = new dawan.projet.tileee.dao.UserDao("tileee");
-		dawan.projet.tileee.bean.User utilisateur = new dawan.projet.tileee.bean.User();
-		String userMessage = new String();
+	public Message chargementTags(@PathVariable("rand") String rand) {
+		dawan.projet.tileee.bean.User user = new dawan.projet.tileee.bean.User();
+		Message msg = new Message();
     	try {
-    	utilisateur = userdao.findByRand(rand, false);
+    		System.out.println(rand);
+    	user = usersServices.findByRand(rand);
 
-        if(utilisateur.isValidation() == false){
-                utilisateur.setValidation(true);
-    			userdao.update(utilisateur, true);
-                return "Votre compte a été validé! Merci.";
+        if(user.isValidation() == false){
+                user.setValidation(true);
+    			usersServices.save(user);
+    			msg.setMessage("Your registration has been validated. You can log in now");
+                return msg;
             }
         } catch (Exception e) {
         	e.printStackTrace();
         }
     	
-		return "Votre compte a déja été validé! Merci.";
+    	msg.setMessage("An error occurred during the validation of your account, please try later.");
+        return msg;
 	}
 }
